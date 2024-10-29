@@ -5,7 +5,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=128, null= False)
     personal_email = models.EmailField(max_length=200 ,null=False, unique=True)
     institutional_email = models.EmailField(max_length=200 ,null=False, unique=True)
-    personal_email_password = models.CharField(max_length=200 ,null=False)
+    institutional_email_password = models.CharField(max_length=200 ,null=False)
     birthday = models.DateField()
     recovery_token = models.CharField(max_length=200 ,null=True, unique=True)
 
