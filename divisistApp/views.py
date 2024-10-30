@@ -11,7 +11,6 @@ def test(req):
     return JsonResponse({'message': 'esto es un test'})
 
 def getUsers(req):
-    users = models.User.objects.all
     return JsonResponse({
-        'users': users
+        'users': ''
     })

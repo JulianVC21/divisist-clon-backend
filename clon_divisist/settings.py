@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'clon_divisist.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'PROYECTO',
+        'NAME': 'divisist_clon',
         'USER': 'root',
         'PASSWORD': 'UFPS2024',
         'HOST': '129.146.249.153',
