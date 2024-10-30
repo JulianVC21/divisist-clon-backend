@@ -11,6 +11,8 @@ def test(req):
     return JsonResponse({'message': 'esto es un test'})
 
 def getUsers(req):
+    users = list(models.User.objects.all())
+    print(users[0])
     return JsonResponse({
         'users': ''
     })
