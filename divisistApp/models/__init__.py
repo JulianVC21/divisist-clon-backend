@@ -7,3 +7,4 @@ from .subject import Subject
 from .subject_group import SubjectGroup
 from .grades import Grades
 from .career import Career
+from .dependency import Dependency
