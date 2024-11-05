@@ -80,12 +80,12 @@ WSGI_APPLICATION = 'clon_divisist.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'divisist_clon',
-        'USER': 'root',
-        'PASSWORD': 'UFPS2024',
-        'HOST': '129.146.249.153',
-        'PORT': '3383'
-    }
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT')
+    } 
 }
 
 
