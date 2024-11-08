@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'coreapi',
     'divisistApp'
 ]
@@ -133,6 +134,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     ...: ...,
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
 }
 
 PASSWORD_HASHERS = [
@@ -141,4 +145,22 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
     "django.contrib.auth.hashers.ScryptPasswordHasher",
+]
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {
+            "min_length": 9,
+        },
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
