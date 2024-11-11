@@ -1,3 +1,3 @@
-from .user import UserSerializer, UserRecoverySerializer, UserUpdatePasswordSerializer
+from .user import UserSerializer, UserRecoverySerializer, UserUpdatePasswordSerializer, UserCheckTokenSerializer
 from .dependency import DependencySerializer
 from .student import StudentSerializer, StudentLoginSerializer
