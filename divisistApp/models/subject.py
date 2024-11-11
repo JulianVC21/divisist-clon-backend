@@ -10,3 +10,5 @@ class Subject(models.Model):
     credits = models.SmallIntegerField()
     hours = models.SmallIntegerField()
     pensum = models.CharField(max_length=2)
+    #listado de materias las cuales son pre-requisito para poder cursar la materia
+    prerequisites = models.ManyToManyField('self', symmetrical=False, blank=True, related_name='required_for')

@@ -22,13 +22,14 @@ class StudentViewSet(viewsets.ModelViewSet):
         serializer = StudentLoginSerializer(data=request.data)
 
         if serializer.is_valid():
+            dni = serializer.validated_data['dni']
             career = serializer.validated_data['career']
             consecutive = serializer.validated_data['consecutive']
             password = serializer.validated_data['password']
 
-            # Buscamos al estudiante
+            # Buscamos al estudiante por su dni y codigo (carrera + consecutivo) para saber que estos datos corresponden al estudiante
             try:
-                student = Student.objects.get(career=career, consecutive=consecutive)
+                student = Student.objects.get(dni=dni, career=career, consecutive=consecutive)
             except Student.DoesNotExist:
                 return Response({'message': 'Datos invalidos'}, status=status.HTTP_404_NOT_FOUND)
             
@@ -50,11 +51,12 @@ class StudentViewSet(viewsets.ModelViewSet):
         
     @action(detail=False, methods=['get'])
     def auth_login(self, request):
-        token = request.headers.get('Authorization', None)
-        
+        token = request.headers.get('Authorization', )
         # Verificamos si el token existe
         if token is None:
             return Response({'message': 'Token invalido'}, status=400)
+        
+        return Response({'message': token})
 
         # Eliminar  'Bearer ' del token
         token = token.split(' ')[1] if token.startswith('Bearer ') else token
@@ -62,10 +64,15 @@ class StudentViewSet(viewsets.ModelViewSet):
         try:
             # Verificar token
             user_id = verify_jwt_token(token)
-            return Response({'message': 'Token invalido', 'user_id': user_id})
+            return Response({'message': 'Token valido', 'user_id': user_id})
 
         except AuthenticationFailed as e:
             return Response({'message': f'Fallo en la autenticación: {str(e)}'}, status=401)
 
         except Exception as e:
             return Response({'message': f'Error: {str(e)}'}, status=500)
+        
+    @action(detail=False, methods=['get'])
+    def auth_test(self, request):
+        token = 'hello world'
+        return Response({'message': token})
