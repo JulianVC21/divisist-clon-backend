@@ -1,27 +1,29 @@
 from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework.exceptions import AuthenticationFailed
-from datetime import datetime
-from django.utils import timezone
+from datetime import datetime, timezone, timedelta
+import jwt
 
-def verify_jwt_token(token):
-    # Función para verificar la validez de un JWT.
-    # Si el token es válido, devuelve el usuario autenticado.
-    # Si no es válido, lanza una excepción.
+from datetime import datetime, timezone, date
+
+def encode_jwt(user_id):
+    key = "secret"
+    payload = {
+        'user_id': user_id,
+        'exp': datetime.now(timezone.utc) + timedelta(minutes=10)
+    }
+    encoded = jwt.encode(payload, key, algorithm="HS256")
+    return encoded
+
+def decode_jwt(token):
+    key = "secret"
     try:
-        # Decodificar el JWT
-        decoded_token = AccessToken(token)
-
-        # Verificar si el token ha expirado
-        if decoded_token['exp'] < datetime.now(timezone.utc).timestamp():
-            raise AuthenticationFailed('Sesión expirada')
-
-        # Si el token es válido, se puede acceder a los datos del usuario
-        user_id = decoded_token['user_id']
+        decoded = jwt.decode(token, key, algorithms=["HS256"])
         
-        # Aquí podrías devolver el usuario directamente, si es necesario:
-        # user = User.objects.get(id=user_id)
+        exp = datetime.fromtimestamp(decoded['exp'], timezone.utc)
+        now = datetime.now(timezone.utc)
         
-        return user_id  # O devolver el usuario si lo necesitas (user)
-
-    except Exception as e:
-        raise AuthenticationFailed(f'Sesión invalida o expirada: {str(e)}')
+        return exp > now
+    except jwt.ExpiredSignatureError:
+        return False
+    except jwt.InvalidTokenError:
+        return False
