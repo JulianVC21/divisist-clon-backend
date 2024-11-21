@@ -61,9 +61,12 @@ class UserViewSet(viewsets.ModelViewSet):
 
             try:
                 user = User.objects.get(recovery_token=recovery_token)
-                return Response({'message': 'Token Valido', 'isValid': True})
+                if user:
+                    return Response({'message': 'Token Valido', 'isValid': True})
+                else:
+                    return Response({'message': 'Token Invalido', 'isValid': False}, status=status.HTTP_404_NOT_FOUND)
             except User.DoesNotExist:
-                return Response({'message': 'Token Invalido'}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'message': 'Token Invalido', 'isValid': False}, status=status.HTTP_404_NOT_FOUND)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
