@@ -37,7 +37,7 @@ class UserViewSet(viewsets.ModelViewSet):
             user.save()
 
             #enviar correo
-            recovery_link = '{front}auth/recovery-password/{token}'.format(front = config('FRONTEND_URL'), token = user.recovery_token)
+            recovery_link = '{front}auth/reset-password/{token}'.format(front = config('FRONTEND_URL'), token = user.recovery_token)
             title = 'RECUPERACIÓN DE CONTRASEÑA - DIVISIST CLON'
             message = 'Hola {name}, este es el link de recuperación de tu contraseña: {recovery_link}'.format(name = user.name, recovery_link = recovery_link)
             email_host = config('EMAIL_USER')

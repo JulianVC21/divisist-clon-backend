@@ -22,8 +22,16 @@ def decode_jwt(token):
         exp = datetime.fromtimestamp(decoded['exp'], timezone.utc)
         now = datetime.now(timezone.utc)
         
-        return exp > now
+        if exp > now:
+            return {
+                'auth': True,
+                'user': decoded['user_id']
+            } 
+        else:
+            return {
+                'auth': False
+            }
     except jwt.ExpiredSignatureError:
-        return False
+        return {'auth': False}
     except jwt.InvalidTokenError:
-        return False
+        return {'auth': False}

@@ -62,7 +62,7 @@ class StudentViewSet(viewsets.ModelViewSet):
             # Verificar token
             decoded = decode_jwt(token)
 
-            return Response({'auth_login':decoded})
+            return Response({ 'value': decoded })
 
         except AuthenticationFailed as e:
             return Response({'message': f'Fallo en la autenticación: {str(e)}'}, status=401)

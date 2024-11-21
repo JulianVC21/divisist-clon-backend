@@ -7,7 +7,6 @@ class StudentSerializer(serializers.ModelSerializer):
         fields='__all__'
         extra_kwargs = {
             'state': {'read_only': True},
-            'consecutive': {'read_only': True},
             'recovery_token': {'read_only': True},
         }
 
