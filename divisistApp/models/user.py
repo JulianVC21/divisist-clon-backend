@@ -10,6 +10,10 @@ class User(models.Model):
     institutional_email = models.EmailField(max_length=200 ,null=False, unique=True)
     birthday = models.DateField(null=False)
     recovery_token = models.CharField(max_length=200 ,null=True, unique=True)
+    telephone = models.CharField(max_length=50, null=True)
+    cellphone = models.CharField(max_length=50, null=True)
+    address = models.CharField(max_length=200, null=True)
+    inclusion_date = models.DateField(default='2024-01-01')
 
     def save(self, *args, **kwargs):
         # Solo encripta la contraseña si aún no ha sido encriptada
